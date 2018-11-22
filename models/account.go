@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/satori/go.uuid"
 	"time"
 )
 
@@ -13,7 +12,7 @@ type AccountAttributes struct {
 }
 
 type AccountData struct {
-	ID            uuid.UUID         `json:"id,omitempty"`
+	ID            string            `json:"id,omitempty"`
 	Type          string            `json:"type"`
 	Attributes    AccountAttributes `json:"attributes"`
 	Links         Links             `json:"links"`

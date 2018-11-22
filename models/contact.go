@@ -1,9 +1,5 @@
 package models
 
-import (
-	"github.com/satori/go.uuid"
-)
-
 const (
 	ContactsType = "contacts"
 
@@ -23,7 +19,7 @@ type ContactAttributeData struct {
 }
 
 type ContactAttributes struct {
-	AccountID          uuid.UUID            `json:"account-id"`
+	AccountID          string               `json:"account-id"`
 	AccountRoles       []string             `json:"account-roles"`
 	Type               string               `json:"type"`
 	ContactType        string               `json:"contact-type,omitempty"`
@@ -44,7 +40,7 @@ type ContactAttributes struct {
 }
 
 type ContactData struct {
-	ID            uuid.UUID         `json:"id,omitempty"`
+	ID            string            `json:"id,omitempty"`
 	Type          string            `json:"type"`
 	Attributes    ContactAttributes `json:"attributes"`
 	Links         Links             `json:"links"`
@@ -68,7 +64,7 @@ type Contact struct {
 	Data ContactData `json:"data"`
 }
 
-func NewNaturalPersonContact(accountId uuid.UUID) *Contact {
+func NewNaturalPersonContact(accountId string) *Contact {
 	contact := Contact{
 		Data: ContactData{
 			Type: ContactsType,

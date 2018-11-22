@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/BANKEX/go-primetrust/models"
-	"github.com/satori/go.uuid"
 	"io/ioutil"
 	"net/http"
 )
@@ -36,7 +35,7 @@ func GetContacts() (*models.ContactsResponse, error) {
 	return &response, nil
 }
 
-func GetContact(contactId uuid.UUID) (*models.Contact, error) {
+func GetContact(contactId string) (*models.Contact, error) {
 	apiUrl := fmt.Sprintf("%s/contacts/%s", _apiPrefix, contactId)
 	req, err := http.NewRequest("GET", apiUrl, nil)
 	req.Header.Add("Authorization", _authHeader)

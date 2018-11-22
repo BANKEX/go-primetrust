@@ -2,12 +2,11 @@ package models
 
 import (
 	"github.com/mongodb/mongo-go-driver/bson/decimal"
-	"github.com/satori/go.uuid"
 	"time"
 )
 
 type CashTransactionAttributes struct {
-	ID                      uuid.UUID          `json:"id,omitempty"`
+	ID                      string             `json:"id,omitempty"`
 	ActualSettlementDate    string             `json:"actual-settlement-date"`
 	Amount                  decimal.Decimal128 `json:"amount"`
 	CommentsLine1           string             `json:"comments-line-1"`
@@ -25,7 +24,7 @@ type CashTransactionAttributes struct {
 
 type CashTransactionData struct {
 	Type          string            `json:"type"`
-	ID            uuid.UUID         `json:"id"`
+	ID            string            `json:"id"`
 	Attributes    AccountAttributes `json:"attributes"`
 	Links         Links             `json:"links"`
 	Relationships Relationships     `json:"relationships"`
