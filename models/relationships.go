@@ -6,7 +6,9 @@ type Relationship struct {
 
 type Relationships struct {
 	Accounts                 Relationship `json:"accounts,omitempty"`
+	Account                  Relationship `json:"account,omitempty"`
 	Contacts                 Relationship `json:"contacts,omitempty"`
+	Contact                  Relationship `json:"contact,omitempty"`
 	AccountType              Relationship `json:"account-type,omitempty"`
 	Addresses                Relationship `json:"addresses,omitempty"`
 	AMLChecks                Relationship `json:"aml-checks,omitempty"`
@@ -20,7 +22,6 @@ type Relationships struct {
 	RelatedFromContacts      Relationship `json:"related-from-contacts,omitempty"`
 	RelatedToContacts        Relationship `json:"related-to-contacts,omitempty"`
 	ToContactRelationships   Relationship `json:"to-contact-relationships,omitempty"`
-	Account                  Relationship `json:"account,omitempty"`
 	PrimaryAddress           Relationship `json:"primary-address,omitempty"`
 	PrimaryContact           Relationship `json:"primary-contact,omitempty"`
 	PrimaryPhoneNumber       Relationship `json:"primary-phone-number,omitempty"`

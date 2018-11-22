@@ -1,20 +1,3 @@
-# PrimeTrust Go Library
-
-## Running the Example
-
-```
-PRIMETRUST_LOGIN=user@example.com PRIMETRUST_PASSWORD=password PRIMETRUST_ACCOUNT=8d60c332-ab08-4ee3-815c-169e45ef4c09 go run examples/main.go
-```
-
-### Environment Variables
-
-* PRIMETRUST_LOGIN - email of existing PrimeTrust user
-* PRIMETRUST_PASSWORD - password
-* PRIMETRUST_ACCOUNT - uuid of custodial account-id
-
-## Usage In Own Application
-
-```go
 package main
 
 import (
@@ -36,5 +19,6 @@ func main() {
 			log.Printf("Account Type \"%s\": %+v", accountTypes.Data[0].ID, accountType)
 		}
 	}
+
+	log.Println("Done")
 }
-```

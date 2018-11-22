@@ -11,8 +11,8 @@ type AccountTypeAttributes struct {
 }
 
 type AccountTypeData struct {
+	ID            string                `json:"id,omitempty"`
 	Type          string                `json:"type"`
-	ID            string                `json:"id"`
 	Attributes    AccountTypeAttributes `json:"attributes"`
 	Links         Links                 `json:"links"`
 	Relationships Relationships         `json:"relationships"`

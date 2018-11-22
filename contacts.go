@@ -77,12 +77,13 @@ func CreateNewContact(contact *models.Contact) (bool, error) {
 	}
 	defer res.Body.Close()
 
-	if res.StatusCode != http.StatusOK {
-		return false, errors.New(res.Status)
-	}
 	body, _ := ioutil.ReadAll(res.Body)
 
-	response := models.ContactsResponse{}
+	if res.StatusCode != http.StatusCreated {
+		return false, errors.New(fmt.Sprintf("%s: %s", res.Status, string(body)))
+	}
+
+	response := models.Contact{}
 	if err := json.Unmarshal(body, &response); err != nil {
 		return false, errors.New("Unmarshal error")
 	}
