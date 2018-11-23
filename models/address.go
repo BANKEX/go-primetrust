@@ -1,7 +1,8 @@
 package models
 
 const (
-	AddressTypeHome = "home"
+	AddressTypeHome   = "home"
+	AddressTypeOffice = "office"
 )
 
 type Address struct {
