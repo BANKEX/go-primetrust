@@ -3,7 +3,7 @@
 ## Running the Example
 
 ```
-PRIMETRUST_LOGIN=user@example.com PRIMETRUST_PASSWORD=password PRIMETRUST_ACCOUNT=8d60c332-ab08-4ee3-815c-169e45ef4c09 go run examples/main.go
+PRIMETRUST_LOGIN=user@example.com PRIMETRUST_PASSWORD=password PRIMETRUST_ACCOUNT=00000000-0000-0000-0000-000000000000 go run examples/main.go
 ```
 
 ### Environment Variables
