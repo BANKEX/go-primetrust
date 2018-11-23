@@ -87,5 +87,5 @@ func CreateNewContact(contact *models.Contact) (*models.Contact, error) {
 		return nil, errors.New("Unmarshal error")
 	}
 
-	return response, nil
+	return &response, nil
 }
