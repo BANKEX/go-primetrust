@@ -60,7 +60,7 @@ func GetContact(contactId string) (*models.Contact, error) {
 	return &response, nil
 }
 
-func CreateNewContact(contact *models.Contact) (bool, error) {
+func CreateNewContact(contact *models.Contact) (*models.Contact, error) {
 	jsonData := new(bytes.Buffer)
 	json.NewEncoder(jsonData).Encode(contact)
 
@@ -72,20 +72,20 @@ func CreateNewContact(contact *models.Contact) (bool, error) {
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
-		return false, err
+		return nil, err
 	}
 	defer res.Body.Close()
 
 	body, _ := ioutil.ReadAll(res.Body)
 
 	if res.StatusCode != http.StatusCreated {
-		return false, errors.New(fmt.Sprintf("%s: %s", res.Status, string(body)))
+		return nil, errors.New(fmt.Sprintf("%s: %s", res.Status, string(body)))
 	}
 
 	response := models.Contact{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return false, errors.New("Unmarshal error")
+		return nil, errors.New("Unmarshal error")
 	}
 
-	return true, nil
+	return response, nil
 }

@@ -33,7 +33,7 @@ func main() {
 			Number: "+15555555555",
 		}
 
-		if ok, err := primetrust.CreateNewContact(contact); ok == false {
+		if _, err := primetrust.CreateNewContact(contact); err != nil {
 			log.Println("Error creating new contact:", err)
 		} else {
 			log.Println("Contact created OK")
