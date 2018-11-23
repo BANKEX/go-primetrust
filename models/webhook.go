@@ -6,9 +6,9 @@ const (
 	WebhookType = "contacts"
 )
 
-type WebhookResponse struct {
+type WebhooksResponse struct {
 	CollectionResponse
-	Data WebhookData `json:"data"`
+	Data []WebhookData `json:"data"`
 }
 
 type WebhookAttribute struct {
