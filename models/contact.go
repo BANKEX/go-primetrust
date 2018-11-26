@@ -5,7 +5,7 @@ const (
 
 	ContactTypeNaturalPerson = "natural_person"
 	ContactTypeCompany       = "company"
-	ContactType              = "c-corp"
+	ContactTypeCCorp         = "c-corp"
 	ContactTypeLLC           = "llc"
 	ContactTypeSCorp         = "s-corp"
 	ContactTypeTrust         = "trust"
@@ -14,18 +14,15 @@ const (
 	AccountRoleTaxFormRecipient = "tax form recipient"
 )
 
-type ContactAttributeData struct {
-	RelatedContacts []RelatedContactData `json:"related_contacts"`
-}
-
 type ContactAttributes struct {
+	ID                 string               `json:"id,omitempty"`
+	Type               string               `json:"type"`
 	AccountID          string               `json:"account-id"`
 	AccountRoles       []string             `json:"account-roles"`
-	Type               string               `json:"type"`
 	ContactType        string               `json:"contact-type,omitempty"`
 	AMLCleared         bool                 `json:"aml-cleared"`
 	CIPCleared         bool                 `json:"cip-cleared"`
-	DateOfBirth        string               `json:"date-of-birth"`
+	DateOfBirth        string               `json:"date-of-birth,omitempty"`
 	Email              string               `json:"email"`
 	Name               string               `json:"name"`
 	Sex                string               `json:"sex,omitempty"`
@@ -36,7 +33,7 @@ type ContactAttributes struct {
 	TaxState           string               `json:"tax-state,omitempty"`
 	PrimaryAddress     Address              `json:"primary-address"`
 	PrimaryPhoneNumber PhoneNumber          `json:"primary-phone-number"`
-	Data               ContactAttributeData `json:"data"`
+	RelatedContacts    []RelatedContactData `json:"related-contacts,omitempty"`
 }
 
 type ContactData struct {
@@ -49,15 +46,15 @@ type ContactData struct {
 
 type RelatedContactData struct {
 	Type               string      `json:"type"`
-	DateOfBirth        string      `json:"date_of_birth"`
+	DateOfBirth        string      `json:"date-of-birth"`
 	Email              string      `json:"email"`
 	Name               string      `json:"name"`
 	Sex                string      `json:"sex"`
 	Label              string      `json:"label"`
-	TaxCountry         string      `json:"tax_country"`
-	TaxIDNumber        string      `json:"tax_id_number"`
-	PrimaryAddress     Address     `json:"primary_address"`
-	PrimaryPhoneNumber PhoneNumber `json:"primary_phone_number"`
+	TaxCountry         string      `json:"tax-country"`
+	TaxIDNumber        string      `json:"tax-id-number"`
+	PrimaryAddress     Address     `json:"primary-address"`
+	PrimaryPhoneNumber PhoneNumber `json:"primary-phone-number"`
 }
 
 type Contact struct {
@@ -78,10 +75,15 @@ func NewNaturalPersonContact(accountId string) *Contact {
 	return &contact
 }
 
-func NewCompanyContact() *Contact {
+func NewCompanyContact(accountId string) *Contact {
 	contact := Contact{
 		Data: ContactData{
-			Type: ContactTypeCompany,
+			Type: ContactsType,
+			Attributes: ContactAttributes{
+				AccountID:    accountId,
+				AccountRoles: []string{AccountRoleOwner},
+				Type:         ContactTypeCompany,
+			},
 		},
 	}
 	return &contact
