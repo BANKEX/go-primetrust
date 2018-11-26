@@ -29,13 +29,15 @@ func main() {
 		Street1:    "1 Sunset Blvd.",
 	}
 	contact.Data.Attributes.PrimaryPhoneNumber = models.PhoneNumber{
-		Number: "+15555555555",
+		Number: "+15555555577",
 	}
 
-	if _, err := primetrust.CreateNewContact(contact); err != nil {
+	if newContact, err := primetrust.CreateNewContact(contact); err != nil {
 		log.Println("Error creating new contact:", err)
+		log.Printf("%+v", contact)
 	} else {
 		log.Println("Contact created OK")
+		log.Printf("%+v", newContact)
 	}
 
 	log.Println("Done")
