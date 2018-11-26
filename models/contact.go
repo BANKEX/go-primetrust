@@ -34,8 +34,8 @@ type ContactAttributes struct {
 	TaxCountry         string               `json:"tax-country"`
 	TaxIDNumber        string               `json:"tax-id-number"`
 	TaxState           string               `json:"tax-state,omitempty"`
-	PrimaryAddress     Address              `json:"primary_address"`
-	PrimaryPhoneNumber PhoneNumber          `json:"primary_phone_number"`
+	PrimaryAddress     Address              `json:"primary-address"`
+	PrimaryPhoneNumber PhoneNumber          `json:"primary-phone-number"`
 	Data               ContactAttributeData `json:"data"`
 }
 
