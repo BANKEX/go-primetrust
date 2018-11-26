@@ -8,6 +8,7 @@ import (
 	"github.com/BANKEX/go-primetrust/models"
 	"io/ioutil"
 	"net/http"
+	"log"
 )
 
 func CreateNewWebhook(webhook *models.Webhook) (*models.Webhook, error) {
@@ -44,7 +45,9 @@ func UpdateWebhook(webhook *models.Webhook) (*models.Webhook, error) {
 	jsonData := new(bytes.Buffer)
 	json.NewEncoder(jsonData).Encode(webhook)
 
-	apiUrl := fmt.Sprintf("%s/webhook-configs/%s", _apiPrefix,webhook.Data.ID)
+	apiUrl := fmt.Sprintf("%s/webhook-configs/%s", _apiPrefix, webhook.Data.ID)
+	log.Println(apiUrl)
+	log.Println(jsonData)
 	req, err := http.NewRequest("PATCH", apiUrl, jsonData)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Add("Authorization", _authHeader)
@@ -95,3 +98,27 @@ func GetWebhooks() (*models.WebhooksResponse, error) {
 	return &response, nil
 }
 
+func GetWebhook(webhookId string) (*models.Webhook, error) {
+	apiUrl := fmt.Sprintf("%s/webhooks/%s", _apiPrefix, webhookId)
+	req, err := http.NewRequest("GET", apiUrl, nil)
+	req.Header.Add("Authorization", _authHeader)
+
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		return nil, errors.New(res.Status)
+	}
+	body, _ := ioutil.ReadAll(res.Body)
+
+	response := models.Webhook{}
+	if err := json.Unmarshal(body, &response); err != nil {
+		return nil, errors.New("Unmarshal error")
+	}
+
+	return &response, nil
+}

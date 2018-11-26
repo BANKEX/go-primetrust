@@ -8,6 +8,7 @@ import (
 	"github.com/BANKEX/go-primetrust/models"
 	"io/ioutil"
 	"net/http"
+	"log"
 )
 
 func UploadDocument(document models.Document) (*models.DocumentResponse, error) {
@@ -18,7 +19,9 @@ func UploadDocument(document models.Document) (*models.DocumentResponse, error) 
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", apiUrl, bytes.NewBuffer(jsonBytes))
+	buffer:=bytes.NewBuffer(jsonBytes)
+	log.Println(buffer)
+	req, err := http.NewRequest("POST", apiUrl, buffer)
 	if err != nil {
 		return nil, err
 	}

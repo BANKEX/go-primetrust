@@ -12,6 +12,11 @@ func main() {
 		log.Println("Error getting webhooks:", err.Error())
 	} else {
 		log.Printf("Webhooks: %d", len(webhooks.Data))
+		if webhook, err := primetrust.GetWebhook(webhooks.Data[0].ID); err != nil {
+			log.Println("Error getting webhook:", err.Error())
+		} else {
+			log.Printf("Webhook: %+v", webhook)
+		}
 	}
 
 	log.Println("Done")

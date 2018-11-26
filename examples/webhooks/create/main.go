@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/BANKEX/go-primetrust"
-	"github.com/BankEx/go-primetrust/models"
+	"github.com/BANKEX/go-primetrust/models"
 	"log"
 	"os"
 )
@@ -12,11 +12,13 @@ func main() {
 
 	accountId := os.Getenv("PRIMETRUST_ACCOUNT")
 
-	webhook := models.NewWebhook(accountId, "testUrl", true)
+	webhook := models.NewWebhook(accountId, "http://www.ya.ru", "test@test.ru","secret1234",true)
 
-	if _, err := primetrust.CreateNewWebhook(webhook); err != nil {
-		log.Println("Error uploading new document:", err)
+	if resp, err := primetrust.CreateNewWebhook(webhook); err != nil {
+		log.Println("Error creating new webhook:", err)
 	} else {
-		log.Println("Document uploaded OK")
+		log.Println("Webhook created OK")
+		log.Panic(resp.Data)
 	}
+	log.Println("Done")
 }
