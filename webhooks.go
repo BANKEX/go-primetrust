@@ -8,7 +8,6 @@ import (
 	"github.com/BANKEX/go-primetrust/models"
 	"io/ioutil"
 	"net/http"
-	"log"
 )
 
 func CreateNewWebhook(webhook *models.Webhook) (*models.Webhook, error) {
@@ -46,8 +45,6 @@ func UpdateWebhook(webhook *models.Webhook) (*models.Webhook, error) {
 	json.NewEncoder(jsonData).Encode(webhook)
 
 	apiUrl := fmt.Sprintf("%s/webhook-configs/%s", _apiPrefix, webhook.Data.ID)
-	log.Println(apiUrl)
-	log.Println(jsonData)
 	req, err := http.NewRequest("PATCH", apiUrl, jsonData)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Add("Authorization", _authHeader)
@@ -73,8 +70,8 @@ func UpdateWebhook(webhook *models.Webhook) (*models.Webhook, error) {
 	return &response, nil
 }
 
-func GetWebhooks() (*models.WebhooksResponse, error) {
-	apiUrl := fmt.Sprintf("%s/webhooks", _apiPrefix)
+func GetLastWebhook(accountId string) (*models.Webhook, error) {
+	apiUrl := fmt.Sprintf("%s/webhook-configs?account.id=%s&one", _apiPrefix, accountId)
 	req, err := http.NewRequest("GET", apiUrl, nil)
 	req.Header.Add("Authorization", _authHeader)
 
@@ -90,7 +87,7 @@ func GetWebhooks() (*models.WebhooksResponse, error) {
 	}
 	body, _ := ioutil.ReadAll(res.Body)
 
-	response := models.WebhooksResponse{}
+	response := models.Webhook{}
 	if err := json.Unmarshal(body, &response); err != nil {
 		return nil, errors.New("Unmarshal error")
 	}
