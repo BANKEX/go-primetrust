@@ -1,14 +1,16 @@
 package models
 
+import "mime/multipart"
+
 type Document struct {
-	AccountID   string `json:"account-id"`
-	ContactID   string `json:"contact-id"`
-	Description string `json:"description"`
-	Extension   string `json:"extension"`
-	File        string `json:"file"`
-	Label       string `json:"label"`
-	MimeType    string `json:"mime_type"`
-	Public      bool   `json:"public"`
+	AccountID   string         `json:"account-id"`
+	ContactID   string         `json:"contact-id"`
+	Description string         `json:"description"`
+	Extension   string         `json:"extension"`
+	File        multipart.File 		   `json:"file"`
+	Label       string         `json:"label"`
+	MimeType    string         `json:"mime_type"`
+	Public      bool           `json:"public"`
 	//response only
 	CreatedAt   string `json:"created-at"`
 	FileURL     string `json:"file-url"`
@@ -30,7 +32,7 @@ type DocumentData struct {
 	ID            string        `json:"id,omitempty"`
 }
 
-func NewDocument(accountId string, contactId string, file string, description string, extension string, label string, mimeType string, public bool) *Document {
+func NewDocument(accountId string, contactId string, file multipart.File, description string, extension string, label string, mimeType string, public bool) *Document {
 	document := Document{
 		AccountID:   accountId,
 		ContactID:   contactId,

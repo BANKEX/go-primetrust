@@ -6,9 +6,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/BANKEX/go-primetrust/models"
+	"io"
 	"io/ioutil"
-	"net/http"
 	"log"
+	"mime/multipart"
+	"net/http"
 )
 
 func UploadDocument(document models.Document) (*models.DocumentResponse, error) {
@@ -19,13 +21,50 @@ func UploadDocument(document models.Document) (*models.DocumentResponse, error) 
 		return nil, err
 	}
 
-	buffer:=bytes.NewBuffer(jsonBytes)
-	log.Println(buffer)
-	req, err := http.NewRequest("POST", apiUrl, buffer)
+	var b bytes.Buffer
+	w := multipart.NewWriter(&b)
+
+	fw, err := w.CreateFormFile("file", document.Label)
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("Content-Type", "multipart/form-data")
+	if _, err = io.Copy(fw, document.File); err != nil {
+		return nil, err
+	}
+
+	data := map[string]interface{}{
+		"account-id":  document.AccountID,
+		"contact-id":  document.ContactID,
+		"description": document.Description,
+		"extension":   document.Extension,
+		"label":       document.Label,
+		"mime_type":   document.MimeType,
+		"public":      document.Public,
+	}
+
+	for key, val := range data {
+		valString, ok := val.(string)
+
+		if !ok {
+			return nil, err
+		}
+		if fw, err = w.CreateFormField(key); err != nil {
+			return nil, err
+		}
+		if _, err = fw.Write([]byte(valString)); err != nil {
+			return nil, err
+		}
+	}
+
+	w.Close()
+
+	buffer := bytes.NewBuffer(jsonBytes)
+	log.Println(buffer)
+	req, err := http.NewRequest("POST", apiUrl, &b)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Add("Content-Type", w.FormDataContentType())
 	req.Header.Add("Authorization", _authHeader)
 
 	client := &http.Client{}
