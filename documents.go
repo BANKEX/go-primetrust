@@ -10,9 +10,11 @@ import (
 	"encoding/json"
 	"github.com/moul/http2curl"
 	"os"
+	"github.com/BANKEX/go-primetrust/models"
+	"errors"
 )
 
-func UploadDocument(path string, accountId string, contactId string, description string, extension string, label string, mimeType string) (*map[string]interface{}, error) {
+func UploadDocument(path string, accountId string, contactId string, description string, extension string, label string, mimeType string) (*models.DocumentResponse, error) {
 	apiUrl := fmt.Sprintf("%s/uploaded-documents", _apiPrefix)
 
 	file, err := os.Open(path)
@@ -37,11 +39,16 @@ func UploadDocument(path string, accountId string, contactId string, description
 	}
 	part.Write(fileContents)
 
+	//this code was commented becaouse i get error
+	// {"errors":[{"status":422,"title":"Invalid Attribute",
+	// "source":{"pointer":"/data/attributes/account-id"},
+	// "detail":"cannot be defined"},
+	// {"status":422,"title":"Invalid Attribute","source":
+	// {"pointer":"/data/attributes/contact-id"},"detail":"cannot be defined"}]}
 	data := map[string]interface{}{
-		"account-id":  accountId,
-		"contact-id":  contactId,
+		//"account-id":  accountId,
+		//"contact-id":  contactId,
 		"description": description,
-		"extension":   extension,
 		"label":       label,
 		"mime_type":   mimeType,
 	}
@@ -71,16 +78,15 @@ func UploadDocument(path string, accountId string, contactId string, description
 
 	bodyResp, _ := ioutil.ReadAll(res.Body)
 	log.Println(res.StatusCode)
-	if res.StatusCode != http.StatusOK {
-		log.Println(bodyResp)
+	if res.StatusCode != http.StatusCreated {
+		log.Println(string(bodyResp))
 		return nil, err
 	}
 
-	var resData map[string]interface{}
-
-	log.Printf("result  ", bodyResp)
-	if err := json.Unmarshal(bodyResp, &resData); err != nil {
-		return nil, err
+	response := models.DocumentResponse{}
+	if err := json.Unmarshal(bodyResp, &response); err != nil {
+		return nil, errors.New("Unmarshal error")
 	}
-	return &resData, nil
+
+	return &response, nil
 }
