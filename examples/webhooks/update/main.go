@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/BANKEX/go-primetrust"
+	"github.com/BANKEX/go-primetrust/models"
 	"log"
 	"os"
-	"github.com/BANKEX/go-primetrust/models"
 )
 
 func main() {
@@ -15,8 +15,8 @@ func main() {
 
 	log.Printf("Getting webhook: %d", webhookId)
 
-	webhook := models.NewWebhook(accountId, "http://www.ya1.ru", "test@test.ru","secret1234",true)
-	webhook.Data.ID=webhookId
+	webhook := models.NewWebhook(accountId, "http://www.ya1.ru", "test@test.ru", "secret1234", true)
+	webhook.Data.ID = webhookId
 	if webhook, err := primetrust.UpdateWebhook(webhook); err != nil {
 		log.Println("Error updating webhook:", err)
 	} else {

@@ -15,7 +15,7 @@ func main() {
 		log.Println("Error getting webhooks:", err.Error())
 	} else {
 
-			log.Printf("Webhook: %+v", webhook)
+		log.Printf("Webhook: %+v", webhook)
 	}
 
 	log.Println("Done")

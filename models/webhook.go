@@ -12,15 +12,15 @@ type WebhooksResponse struct {
 }
 
 type WebhookAttribute struct {
-	AccountID 	 string    `json:"account_id"`
-	URL       	 string    `json:"url"`
-	Enabled   	 bool      `json:"enabled"`
-	ContactEmail string    `json:"contact-email"`
-	SharedSecret string    `json:"shared-secret"`
+	AccountID    string `json:"account_id"`
+	URL          string `json:"url"`
+	Enabled      bool   `json:"enabled"`
+	ContactEmail string `json:"contact-email"`
+	SharedSecret string `json:"shared-secret"`
 	//only for response
-	CreatedAt    time.Time `json:"created-at"`
-	Failures     int       `json:"failures"`
-	UpdatedAt    time.Time `json:"updated-at"`
+	CreatedAt time.Time `json:"created-at"`
+	Failures  int       `json:"failures"`
+	UpdatedAt time.Time `json:"updated-at"`
 }
 
 type WebhookData struct {
@@ -41,9 +41,9 @@ func NewWebhook(accountId string, url string, email string, secret string, enabl
 		Data: WebhookData{
 			Type: WebhookType,
 			Attributes: WebhookAttribute{
-				Enabled:   enabled,
-				URL:       url,
-				AccountID: accountId,
+				Enabled:      enabled,
+				URL:          url,
+				AccountID:    accountId,
 				ContactEmail: email,
 				SharedSecret: secret,
 			},

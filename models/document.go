@@ -7,7 +7,7 @@ type Document struct {
 	ContactID   string         `json:"contact-id"`
 	Description string         `json:"description"`
 	Extension   string         `json:"extension"`
-	File        multipart.File 		   `json:"file"`
+	File        multipart.File `json:"file"`
 	Label       string         `json:"label"`
 	MimeType    string         `json:"mime_type"`
 	Public      bool           `json:"public"`

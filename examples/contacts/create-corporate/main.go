@@ -33,13 +33,13 @@ func main() {
 	}
 	contact.Data.Attributes.RelatedContacts = []models.RelatedContactData{
 		models.RelatedContactData{
-			Type: models.ContactTypeNaturalPerson,
+			Type:        models.ContactTypeNaturalPerson,
 			DateOfBirth: "1981-10-31",
-			Email: "name@example.com",
-			Sex: "male",
-			Name: "Sample Person",
-			TaxCountry: "US",
-			Label: "CEO",
+			Email:       "name@example.com",
+			Sex:         "male",
+			Name:        "Sample Person",
+			TaxCountry:  "US",
+			Label:       "CEO",
 			TaxIDNumber: "123123123",
 			PrimaryAddress: models.Address{
 				Type:       models.AddressTypeHome,

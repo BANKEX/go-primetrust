@@ -12,7 +12,7 @@ func main() {
 
 	accountId := os.Getenv("PRIMETRUST_ACCOUNT")
 
-	webhook := models.NewWebhook(accountId, "http://www.ya.ru", "test@test.ru","secret1234",true)
+	webhook := models.NewWebhook(accountId, "http://www.ya.ru", "test@test.ru", "secret1234", true)
 
 	if resp, err := primetrust.CreateNewWebhook(webhook); err != nil {
 		log.Println("Error creating new webhook:", err)
