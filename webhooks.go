@@ -34,7 +34,7 @@ func CreateNewWebhook(webhook *models.Webhook) (*models.Webhook, error) {
 
 	response := models.Webhook{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil
@@ -64,7 +64,7 @@ func UpdateWebhook(webhook *models.Webhook) (*models.Webhook, error) {
 
 	response := models.Webhook{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil
@@ -89,7 +89,7 @@ func GetLastWebhook(accountId string) (*models.Webhook, error) {
 
 	response := models.Webhook{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil
@@ -114,7 +114,7 @@ func GetWebhook(webhookId string) (*models.Webhook, error) {
 
 	response := models.Webhook{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil

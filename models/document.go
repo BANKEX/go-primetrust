@@ -3,20 +3,20 @@ package models
 import "mime/multipart"
 
 type Document struct {
-	AccountID   string         `json:"account-id"`
-	ContactID   string         `json:"contact-id"`
-	Description string         `json:"description"`
-	Extension   string         `json:"extension"`
-	File        multipart.File `json:"file"`
-	Label       string         `json:"label"`
-	MimeType    string         `json:"mime_type"`
-	Public      bool           `json:"public"`
+	AccountID   string         `json:"account-id,omitempty"`
+	ContactID   string         `json:"contact-id,omitempty"`
+	Description string         `json:"description,omitempty"`
+	Extension   string         `json:"extension,omitempty"`
+	File        multipart.File `json:"file,omitempty"`
+	Label       string         `json:"label,omitempty"`
+	MimeType    string         `json:"mime_type,omitempty"`
+	Public      bool           `json:"public,omitempty"`
 	//response only
-	CreatedAt   string `json:"created-at"`
-	FileURL     string `json:"file-url"`
+	CreatedAt   string `json:"created-at,omitempty"`
+	FileURL     string `json:"file-url,omitempty"`
 	VersionUrls struct {
 		Original string `json:"original"`
-	} `json:"version-urls"`
+	} `json:"version-urls,omitempty"`
 }
 
 type DocumentResponse struct {

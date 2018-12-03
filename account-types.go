@@ -28,7 +28,7 @@ func GetAccountTypes() (*models.AccountTypesResponse, error) {
 
 	response := models.AccountTypesResponse{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil
@@ -53,7 +53,7 @@ func GetAccountType(accountTypeId string) (*models.AccountType, error) {
 
 	response := models.AccountType{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil

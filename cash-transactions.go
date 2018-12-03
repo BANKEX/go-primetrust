@@ -28,7 +28,7 @@ func GetCashTransactions() (*models.CashTransactionsResponse, error) {
 
 	response := models.CashTransactionsResponse{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil

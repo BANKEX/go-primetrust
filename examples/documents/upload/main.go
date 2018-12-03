@@ -3,24 +3,40 @@ package main
 import (
 	"github.com/BANKEX/go-primetrust"
 	"log"
+	"mime/multipart"
+	"net/textproto"
 	"os"
+	"path/filepath"
 )
 
 func main() {
 	primetrust.Init(true, os.Getenv("PRIMETRUST_LOGIN"), os.Getenv("PRIMETRUST_PASSWORD"))
 
-	accountId := "6db32598-6ccc-452d-98d6-f1338f982181"
-	contactId := "8d60c332-ab08-4ee3-815c-169e45ef4c09"
+	contactId := os.Getenv("PRIMETRUST_CONTACT")
+	label := "Passport"
+	description := "{\"validFrom\": \"2010-01-01\", \"validTill\": \"2020-01-01\"}"
 
-	path, _ := os.Getwd()
-	path += "/examples/documents/upload/empty.jpg"
-	log.Println(path)
+	cwd, _ := os.Getwd()
+	filePath := filepath.Join(cwd, "/examples/documents/upload/empty.jpg")
+	_, fileName := filepath.Split(filePath)
 
-	if response, err := primetrust.UploadDocument(path, accountId,contactId,"description","extention","label","mimeType"); err != nil {
-		log.Println("Error uploading new document:", err)
-	} else {
-		log.Println("Document uploaded: ", response)
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	fileHeader := multipart.FileHeader{
+		Filename: fileName,
+		Header: textproto.MIMEHeader{
+			"Content-Type": []string{"image/jpeg"},
+		},
 	}
 
-	log.Println("Done")
+	response, err := primetrust.UploadDocument(file, fileHeader, contactId, label, description)
+	if err != nil {
+		log.Println("Error uploading new document:", err)
+	}
+
+	log.Println("Document uploaded OK:", response)
 }

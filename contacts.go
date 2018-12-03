@@ -29,7 +29,7 @@ func GetContacts() (*models.ContactsResponse, error) {
 
 	response := models.ContactsResponse{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil
@@ -54,7 +54,7 @@ func GetContact(contactId string) (*models.Contact, error) {
 
 	response := models.Contact{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil
@@ -84,7 +84,7 @@ func CreateNewContact(contact *models.Contact) (*models.Contact, error) {
 
 	response := models.Contact{}
 	if err := json.Unmarshal(body, &response); err != nil {
-		return nil, errors.New("Unmarshal error")
+		return nil, errors.New("unmarshal error")
 	}
 
 	return &response, nil
