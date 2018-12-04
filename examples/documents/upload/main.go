@@ -12,7 +12,7 @@ import (
 func main() {
 	primetrust.Init(true, os.Getenv("PRIMETRUST_LOGIN"), os.Getenv("PRIMETRUST_PASSWORD"))
 
-	contactId := os.Getenv("PRIMETRUST_CONTACT")
+	contactId := os.Getenv("PRIMETRUST_CONTACT_ID")
 	label := "Passport"
 	description := "{\"validFrom\": \"2010-01-01\", \"validTill\": \"2020-01-01\"}"
 

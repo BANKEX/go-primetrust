@@ -10,18 +10,21 @@ import (
 func main() {
 	primetrust.Init(true, os.Getenv("PRIMETRUST_LOGIN"), os.Getenv("PRIMETRUST_PASSWORD"))
 
-	accountId := os.Getenv("PRIMETRUST_ACCOUNT")
-	webhookId := os.Getenv("PRIMETRUST_WEBHOOK")
+	accountId := os.Getenv("PRIMETRUST_ACCOUNT_ID")
+	webhookId := os.Getenv("PRIMETRUST_WEBHOOK_ID")
+	webhookURL := os.Getenv("PRIMETRUST_WEBHOOK_URL")
+	webhookEmail := os.Getenv("PRIMETRUST_WEBHOOK_EMAIL")
+	webhookSecret := os.Getenv("PRIMETRUST_WEBHOOK_SECRET")
 
-	log.Printf("Getting webhook: %d", webhookId)
+	log.Printf("Getting webhook: %s", webhookId)
 
-	webhook := models.NewWebhook(accountId, "http://www.ya1.ru", "test@test.ru", "secret1234", true)
+	webhook := models.NewWebhook(accountId, webhookURL, webhookEmail, webhookSecret, true)
 	webhook.Data.ID = webhookId
-	if webhook, err := primetrust.UpdateWebhook(webhook); err != nil {
+	if _, err := primetrust.UpdateWebhook(webhook); err != nil {
 		log.Println("Error updating webhook:", err)
 	} else {
 		log.Println("Webhook updated OK")
-		log.Panic(webhook.Data)
 	}
+
 	log.Println("Done")
 }

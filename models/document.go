@@ -11,9 +11,8 @@ type Document struct {
 	Label       string         `json:"label,omitempty"`
 	MimeType    string         `json:"mime_type,omitempty"`
 	Public      bool           `json:"public,omitempty"`
-	//response only
-	CreatedAt   string `json:"created-at,omitempty"`
-	FileURL     string `json:"file-url,omitempty"`
+	CreatedAt   string         `json:"created-at,omitempty"`
+	FileURL     string         `json:"file-url,omitempty"`
 	VersionUrls struct {
 		Original string `json:"original"`
 	} `json:"version-urls,omitempty"`
@@ -25,11 +24,11 @@ type DocumentResponse struct {
 }
 
 type DocumentData struct {
-	Attributes    Document      `json:"attributes"`
+	ID            string        `json:"id,omitempty"`
 	Type          string        `json:"type"`
+	Attributes    Document      `json:"attributes"`
 	Links         Links         `json:"links"`
 	Relationships Relationships `json:"relationships"`
-	ID            string        `json:"id,omitempty"`
 }
 
 func NewDocument(accountId string, contactId string, file multipart.File, description string, extension string, label string, mimeType string, public bool) *Document {

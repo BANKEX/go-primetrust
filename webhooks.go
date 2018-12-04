@@ -58,7 +58,7 @@ func UpdateWebhook(webhook *models.Webhook) (*models.Webhook, error) {
 
 	body, _ := ioutil.ReadAll(res.Body)
 
-	if res.StatusCode != http.StatusCreated {
+	if res.StatusCode != http.StatusOK {
 		return nil, errors.New(fmt.Sprintf("%s: %s", res.Status, string(body)))
 	}
 

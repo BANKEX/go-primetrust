@@ -23,8 +23,8 @@ type CashTransactionAttributes struct {
 }
 
 type CashTransactionData struct {
+	ID            string            `json:"id,omitempty"`
 	Type          string            `json:"type"`
-	ID            string            `json:"id"`
 	Attributes    AccountAttributes `json:"attributes"`
 	Links         Links             `json:"links"`
 	Relationships Relationships     `json:"relationships"`

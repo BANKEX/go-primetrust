@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	Version             = "1.0.2"
+	Version             = "1.0.3"
 	SandboxAPIPrefix    = "https://sandbox.primetrust.com/v2"
 	ProductionAPIPrefix = "https://api.primetrust.com/v2"
 )

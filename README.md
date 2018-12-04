@@ -3,14 +3,21 @@
 ## Running the Example
 
 ```
-PRIMETRUST_LOGIN=user@example.com PRIMETRUST_PASSWORD=password PRIMETRUST_ACCOUNT=00000000-0000-0000-0000-000000000000 go run examples/main.go
+PRIMETRUST_LOGIN=user@example.com PRIMETRUST_PASSWORD=password PRIMETRUST_ACCOUNT_ID=00000000-0000-0000-0000-000000000000 go run examples/account-types/*.go
 ```
 
 ### Environment Variables
 
+Please specify appropriate variables when running examples according to source code.
+
 * PRIMETRUST_LOGIN - email of existing PrimeTrust user
 * PRIMETRUST_PASSWORD - password
-* PRIMETRUST_ACCOUNT - uuid of custodial account-id
+* PRIMETRUST_ACCOUNT_ID - uuid of custodial account-id
+* PRIMETRUST_CONTACT_ID - uuid of KYC contact
+* PRIMETRUST_WEBHOOK_ID - uuid of webhook
+* PRIMETRUST_WEBHOOK_URL
+* PRIMETRUST_WEBHOOK_EMAIL
+* PRIMETRUST_WEBHOOK_SECRET
 
 ## Usage In Own Application
 

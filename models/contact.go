@@ -28,8 +28,8 @@ type ContactAttributes struct {
 	Sex                string               `json:"sex,omitempty"`
 	Label              string               `json:"label,omitempty"`
 	RegionOfFormation  string               `json:"region-of-formation,omitempty"`
-	TaxCountry         string               `json:"tax-country"`
 	TaxIDNumber        string               `json:"tax-id-number"`
+	TaxCountry         string               `json:"tax-country"`
 	TaxState           string               `json:"tax-state,omitempty"`
 	PrimaryAddress     Address              `json:"primary-address"`
 	PrimaryPhoneNumber PhoneNumber          `json:"primary-phone-number"`
@@ -51,8 +51,8 @@ type RelatedContactData struct {
 	Name               string      `json:"name"`
 	Sex                string      `json:"sex"`
 	Label              string      `json:"label"`
-	TaxCountry         string      `json:"tax-country"`
 	TaxIDNumber        string      `json:"tax-id-number"`
+	TaxCountry         string      `json:"tax-country"`
 	PrimaryAddress     Address     `json:"primary-address"`
 	PrimaryPhoneNumber PhoneNumber `json:"primary-phone-number"`
 }

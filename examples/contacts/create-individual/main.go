@@ -10,7 +10,7 @@ import (
 func main() {
 	primetrust.Init(true, os.Getenv("PRIMETRUST_LOGIN"), os.Getenv("PRIMETRUST_PASSWORD"))
 
-	accountId := os.Getenv("PRIMETRUST_ACCOUNT")
+	accountId := os.Getenv("PRIMETRUST_ACCOUNT_ID")
 	contact := models.NewNaturalPersonContact(accountId)
 
 	contact.Data.Attributes.DateOfBirth = "1981-10-31"

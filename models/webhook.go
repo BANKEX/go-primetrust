@@ -12,24 +12,22 @@ type WebhooksResponse struct {
 }
 
 type WebhookAttribute struct {
-	AccountID    string `json:"account_id"`
-	URL          string `json:"url"`
-	Enabled      bool   `json:"enabled"`
-	ContactEmail string `json:"contact-email"`
-	SharedSecret string `json:"shared-secret"`
-	//only for response
-	CreatedAt time.Time `json:"created-at"`
-	Failures  int       `json:"failures"`
-	UpdatedAt time.Time `json:"updated-at"`
+	AccountID    string    `json:"account_id"`
+	URL          string    `json:"url"`
+	Enabled      bool      `json:"enabled"`
+	ContactEmail string    `json:"contact-email"`
+	SharedSecret string    `json:"shared-secret"`
+	CreatedAt    time.Time `json:"created-at,omitempty"`
+	Failures     int       `json:"failures,omitempty"`
+	UpdatedAt    time.Time `json:"updated-at,omitempty"`
 }
 
 type WebhookData struct {
-	Attributes WebhookAttribute `json:"attributes"`
-	Type       string           `json:"type"`
-	//only for response
-	Links         Links         `json:"links"`
-	Relationships Relationships `json:"relationships"`
-	ID            string        `json:"id,omitempty"`
+	ID            string           `json:"id,omitempty"`
+	Type          string           `json:"type"`
+	Attributes    WebhookAttribute `json:"attributes"`
+	Links         Links            `json:"links,omitempty"`
+	Relationships Relationships    `json:"relationships,omitempty"`
 }
 
 type Webhook struct {
