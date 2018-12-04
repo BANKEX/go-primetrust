@@ -126,7 +126,7 @@ func GetWebhook(webhookId string) (*models.Webhook, error) {
 func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, error) {
 	body, _ := ioutil.ReadAll(r.Body)
 	log.Println("BS:", string(body))
-	log.Println("BD:", string(body))
+	log.Println("BD:", body)
 
 	h := sha256.New()
 	h.Write([]byte(secret))
