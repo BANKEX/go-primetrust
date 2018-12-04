@@ -3,7 +3,7 @@ package models
 import "time"
 
 const (
-	WebhookType = "contacts"
+	WebhooksType = "webhook-configs"
 )
 
 type WebhooksResponse struct {
@@ -37,7 +37,7 @@ type Webhook struct {
 func NewWebhook(accountId string, url string, email string, secret string, enabled bool) *Webhook {
 	webhook := Webhook{
 		Data: WebhookData{
-			Type: WebhookType,
+			Type: WebhooksType,
 			Attributes: WebhookAttribute{
 				Enabled:      enabled,
 				URL:          url,
@@ -48,4 +48,22 @@ func NewWebhook(accountId string, url string, email string, secret string, enabl
 		},
 	}
 	return &webhook
+}
+
+type WebhookPayloadData struct {
+	Changes    []string          `json:"changes,omitempty"`
+	Attributes map[string]string `json:"attributes,omitempty"`
+}
+
+type WebhookPayload struct {
+	ID               string             `json:"id,omitempty"`
+	Action           string             `json:"action,omitempty"`
+	CreatedAt        time.Time          `json:"created-at,omitempty"`
+	Data             WebhookPayloadData `json:"data,omitempty"`
+	Failures         int                `json:"failures,omitempty"`
+	LastRequestAt    time.Time          `json:"last-request-at,omitempty"`
+	LastResponseCode int                `json:"last-response-code,omitempty"`
+	ResourceID       string             `json:"resource-id,omitempty"`
+	ResourceType     string             `json:"resource-type,omitempty"`
+	Success          bool               `json:"success,omitempty"`
 }
