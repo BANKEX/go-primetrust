@@ -3,11 +3,13 @@ package primetrust
 import (
 	"bytes"
 	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/BANKEX/go-primetrust/models"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -122,11 +124,12 @@ func GetWebhook(webhookId string) (*models.Webhook, error) {
 }
 
 func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, error) {
-	hmac := sha256.New()
-	hmac.Write([]byte(secret))
-	webhookHMAC := fmt.Sprintf("%x", hmac.Sum(nil))
+	h := sha256.New()
+	h.Write([]byte(secret))
+	webhookHMAC := base64.StdEncoding.EncodeToString(h.Sum(nil))
 
 	if r.Header.Get("X-Prime-Trust-Webhook-Hmac") != webhookHMAC {
+		log.Println("Wrong X-Prime-Trust-Webhook-Hmac:", r.Header.Get("X-Prime-Trust-Webhook-Hmac"))
 		return nil, errors.New("X-Prime-Trust-Webhook-Hmac header is absent or not valid")
 	}
 
