@@ -125,7 +125,8 @@ func GetWebhook(webhookId string) (*models.Webhook, error) {
 
 func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, error) {
 	body, _ := ioutil.ReadAll(r.Body)
-	log.Println(string(body))
+	log.Println("BS:", string(body))
+	log.Println("BD:", string(body))
 
 	h := sha256.New()
 	h.Write([]byte(secret))
@@ -163,12 +164,8 @@ func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, 
 	h5.Write([]byte(secret))
 	h5.Write([]byte(webhookPayload.Data))
 	webhookHMAC5 := base64.StdEncoding.EncodeToString(h5.Sum(nil))
-	log.Println("HMC4:", webhookHMAC5)
+	log.Println("HMC5:", webhookHMAC5)
 
-	log.Println("HMC1:", webhookHMAC)
-	log.Println("HMC2:", webhookHMAC2)
-	log.Println("HMC3:", webhookHMAC3)
-	log.Println("HMC4:", webhookHMAC4)
 
 	return &webhookPayload, nil
 }
