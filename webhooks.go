@@ -2,6 +2,7 @@ package primetrust
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -118,4 +119,21 @@ func GetWebhook(webhookId string) (*models.Webhook, error) {
 	}
 
 	return &response, nil
+}
+
+func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, error) {
+	hmac := sha256.New()
+	hmac.Write([]byte(secret))
+	webhookHMAC := fmt.Sprintf("%x", hmac.Sum(nil))
+
+	if r.Header.Get("X-Prime-Trust-Webhook-Hmac") != webhookHMAC {
+		return nil, errors.New("X-Prime-Trust-Webhook-Hmac header is absent or not valid")
+	}
+
+	var webhookPayload models.WebhookPayload
+	if err := json.NewDecoder(r.Body).Decode(&webhookPayload); err != nil {
+		return nil, errors.New("error decoding webhook payload")
+	}
+
+	return &webhookPayload, nil
 }
