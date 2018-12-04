@@ -58,12 +58,12 @@ type WebhookPayloadData struct {
 type WebhookPayload struct {
 	ID               string             `json:"id,omitempty"`
 	Action           string             `json:"action,omitempty"`
-	CreatedAt        time.Time          `json:"created-at,omitempty"`
+	CreatedAt        time.Time          `json:"created_at,omitempty"`
 	Data             WebhookPayloadData `json:"data,omitempty"`
 	Failures         int                `json:"failures,omitempty"`
-	LastRequestAt    time.Time          `json:"last-request-at,omitempty"`
-	LastResponseCode int                `json:"last-response-code,omitempty"`
-	ResourceID       string             `json:"resource-id,omitempty"`
-	ResourceType     string             `json:"resource-type,omitempty"`
+	LastRequestAt    time.Time          `json:"last_request_at,omitempty"`
+	LastResponseCode int                `json:"last_response_code,omitempty"`
+	ResourceID       string             `json:"resource_id,omitempty"`
+	ResourceType     string             `json:"resource_type,omitempty"`
 	Success          bool               `json:"success,omitempty"`
 }

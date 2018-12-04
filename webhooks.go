@@ -138,8 +138,14 @@ func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, 
 	h2.Write(body)
 	webhookHMAC2 := base64.StdEncoding.EncodeToString(h2.Sum(nil))
 
+	h3 := sha256.New()
+	h3.Write([]byte(secret))
+	h3.Write(body)
+	webhookHMAC3 := base64.StdEncoding.EncodeToString(h3.Sum(nil))
+
 	log.Println("HMC1:", webhookHMAC)
 	log.Println("HMC2:", webhookHMAC2)
+	log.Println("HMC3:", webhookHMAC3)
 
 	var webhookPayload models.WebhookPayload
 	if err := json.Unmarshal(body, &webhookPayload); err != nil {
