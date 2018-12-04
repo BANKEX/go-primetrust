@@ -130,8 +130,16 @@ func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, 
 
 	if r.Header.Get("X-Prime-Trust-Webhook-Hmac") != webhookHMAC {
 		log.Println("Wrong X-Prime-Trust-Webhook-Hmac:", r.Header.Get("X-Prime-Trust-Webhook-Hmac"))
-		return nil, errors.New("X-Prime-Trust-Webhook-Hmac header is absent or not valid")
+		//return nil, errors.New("X-Prime-Trust-Webhook-Hmac header is absent or not valid")
 	}
+
+	body, _ := ioutil.ReadAll(r.Body)
+	h2 := sha256.New()
+	h2.Write(body)
+	webhookHMAC2 := base64.StdEncoding.EncodeToString(h2.Sum(nil))
+
+	log.Println("HMC1:", webhookHMAC)
+	log.Println("HMC2:", webhookHMAC2)
 
 	var webhookPayload models.WebhookPayload
 	if err := json.NewDecoder(r.Body).Decode(&webhookPayload); err != nil {

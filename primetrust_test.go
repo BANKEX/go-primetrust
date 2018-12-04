@@ -21,7 +21,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestPrimetrustVersion(t *testing.T) {
-	assert.Equal(t, "1.0.7", Version, "Primetrust version does not match")
+	assert.Equal(t, "1.0.8", Version, "Primetrust version does not match")
 }
 
 func TestGetAccounts(t *testing.T) {
