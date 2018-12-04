@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"github.com/BANKEX/go-primetrust/models"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
