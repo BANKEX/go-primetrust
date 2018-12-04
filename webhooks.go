@@ -2,6 +2,7 @@ package primetrust
 
 import (
 	"bytes"
+	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
@@ -125,47 +126,19 @@ func GetWebhook(webhookId string) (*models.Webhook, error) {
 
 func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, error) {
 	body, _ := ioutil.ReadAll(r.Body)
-	log.Println("BS:", string(body))
-	log.Println("BD:", body)
 
-	h := sha256.New()
-	h.Write([]byte(secret))
+	h := hmac.New(sha256.New, []byte(secret))
+	h.Write(body)
 	webhookHMAC := base64.StdEncoding.EncodeToString(h.Sum(nil))
 
 	if r.Header.Get("X-Prime-Trust-Webhook-Hmac") != webhookHMAC {
-		log.Println("Wrong X-Prime-Trust-Webhook-Hmac:", r.Header.Get("X-Prime-Trust-Webhook-Hmac"))
-		//return nil, errors.New("X-Prime-Trust-Webhook-Hmac header is absent or not valid")
+		return nil, errors.New("X-Prime-Trust-Webhook-Hmac header is absent or not valid")
 	}
-
-	h2 := sha256.New()
-	h2.Write(body)
-	webhookHMAC2 := base64.StdEncoding.EncodeToString(h2.Sum(nil))
-
-	h3 := sha256.New()
-	h3.Write([]byte(secret))
-	h3.Write(body)
-	webhookHMAC3 := base64.StdEncoding.EncodeToString(h3.Sum(nil))
-
-	h4 := sha256.New()
-	h4.Write([]byte(secret + string(body)))
-	webhookHMAC4 := base64.StdEncoding.EncodeToString(h4.Sum(nil))
-
-	log.Println("HMC1:", webhookHMAC)
-	log.Println("HMC2:", webhookHMAC2)
-	log.Println("HMC3:", webhookHMAC3)
-	log.Println("HMC4:", webhookHMAC4)
 
 	var webhookPayload models.WebhookPayload
 	if err := json.Unmarshal(body, &webhookPayload); err != nil {
 		return nil, errors.New("error decoding webhook payload")
 	}
-
-	h5 := sha256.New()
-	h5.Write([]byte(secret))
-	h5.Write([]byte(webhookPayload.Data))
-	webhookHMAC5 := base64.StdEncoding.EncodeToString(h5.Sum(nil))
-	log.Println("HMC5:", webhookHMAC5)
-
 
 	return &webhookPayload, nil
 }
