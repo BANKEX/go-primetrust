@@ -142,7 +142,7 @@ func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, 
 	log.Println("HMC2:", webhookHMAC2)
 
 	var webhookPayload models.WebhookPayload
-	if err := json.NewDecoder(r.Body).Decode(&webhookPayload); err != nil {
+	if err := json.Unmarshal(body, &webhookPayload); err != nil {
 		return nil, errors.New("error decoding webhook payload")
 	}
 
