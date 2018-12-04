@@ -124,6 +124,9 @@ func GetWebhook(webhookId string) (*models.Webhook, error) {
 }
 
 func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, error) {
+	body, _ := ioutil.ReadAll(r.Body)
+	log.Println(string(body))
+
 	h := sha256.New()
 	h.Write([]byte(secret))
 	webhookHMAC := base64.StdEncoding.EncodeToString(h.Sum(nil))
@@ -133,7 +136,6 @@ func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, 
 		//return nil, errors.New("X-Prime-Trust-Webhook-Hmac header is absent or not valid")
 	}
 
-	body, _ := ioutil.ReadAll(r.Body)
 	h2 := sha256.New()
 	h2.Write(body)
 	webhookHMAC2 := base64.StdEncoding.EncodeToString(h2.Sum(nil))
@@ -143,9 +145,14 @@ func GetWebhookPayload(r *http.Request, secret string) (*models.WebhookPayload, 
 	h3.Write(body)
 	webhookHMAC3 := base64.StdEncoding.EncodeToString(h3.Sum(nil))
 
+	h4 := sha256.New()
+	h4.Write([]byte(secret + string(body)))
+	webhookHMAC4 := base64.StdEncoding.EncodeToString(h4.Sum(nil))
+
 	log.Println("HMC1:", webhookHMAC)
 	log.Println("HMC2:", webhookHMAC2)
 	log.Println("HMC3:", webhookHMAC3)
+	log.Println("HMC4:", webhookHMAC4)
 
 	var webhookPayload models.WebhookPayload
 	if err := json.Unmarshal(body, &webhookPayload); err != nil {
