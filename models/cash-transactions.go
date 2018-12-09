@@ -1,14 +1,13 @@
 package models
 
 import (
-	"github.com/mongodb/mongo-go-driver/bson/decimal"
 	"time"
 )
 
 type CashTransactionAttributes struct {
 	ID                      string             `json:"id,omitempty"`
 	ActualSettlementDate    string             `json:"actual-settlement-date"`
-	Amount                  decimal.Decimal128 `json:"amount"`
+	Amount                  float64            `json:"amount"`
 	CommentsLine1           string             `json:"comments-line-1"`
 	CommentsLine2           string             `json:"comments-line-2"`
 	CommentsLine3           string             `json:"comments-line-3"`
